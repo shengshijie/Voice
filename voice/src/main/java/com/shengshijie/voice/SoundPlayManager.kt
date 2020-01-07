@@ -20,6 +20,16 @@ object SoundPlayManager {
     }
 
     @JvmStatic
+    fun play(@RawRes res: Int) {
+        play(res,"") {}
+    }
+
+    @JvmStatic
+    fun play(@RawRes res: Int, amount: String = "") {
+        play(res,amount) {}
+    }
+
+    @JvmStatic
     fun play(@RawRes res: Int, amount: String = "", onComplete: () -> Unit = {}) {
         val list = mutableListOf<Voice>().apply {
             add(Voice(res))
