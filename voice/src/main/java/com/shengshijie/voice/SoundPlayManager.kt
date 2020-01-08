@@ -65,6 +65,7 @@ object SoundPlayManager {
         }
     }
 
+    @JvmStatic
     fun release() {
         mSoundPlayer.release()
     }
