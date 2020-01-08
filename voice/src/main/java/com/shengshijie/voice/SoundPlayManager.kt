@@ -8,15 +8,16 @@ import kotlin.concurrent.thread
 
 object SoundPlayManager {
 
-    private var mContext: Context? = null
+    private lateinit var mContext: Context
 
-    private var mSoundPlayer: SoundPool = SoundPool.Builder()
-        .setMaxStreams(10)
-        .build()
+    private lateinit var mSoundPlayer: SoundPool
 
     @JvmStatic
     fun init(context: Context) {
         mContext = context
+        mSoundPlayer = SoundPool.Builder()
+            .setMaxStreams(10)
+            .build()
     }
 
     @JvmStatic
