@@ -16,9 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun test(view: View) {
-        SoundPlayManager.play(R.raw.tts_pay_success,"1.23") {
-            HLog.e("onComplete")
-        }
+        SoundPlayManager.play(R.raw.tts_pay_success,"1.232")
     }
 
     override fun onDestroy() {

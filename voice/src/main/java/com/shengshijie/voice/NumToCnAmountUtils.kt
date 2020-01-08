@@ -35,7 +35,7 @@ object NumToCnAmountUtils {
 
     private const val CN_ZERO_FULL = "零元$CN_FULL"
 
-    fun numberToWord(amount: String): String {
+    fun numberToCnAmount(amount: String): String {
         if (amount.isEmpty()) {
             return ""
         }

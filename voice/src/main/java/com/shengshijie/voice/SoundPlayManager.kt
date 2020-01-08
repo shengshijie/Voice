@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.media.SoundPool
 import androidx.annotation.RawRes
-import com.shengshijie.log.HLog
 import kotlin.concurrent.thread
 
 object SoundPlayManager {
@@ -15,25 +14,26 @@ object SoundPlayManager {
         .setMaxStreams(10)
         .build()
 
+    @JvmStatic
     fun init(context: Context) {
         mContext = context
     }
 
     @JvmStatic
     fun play(@RawRes res: Int) {
-        play(res,"") {}
+        play(res, "") {}
     }
 
     @JvmStatic
-    fun play(@RawRes res: Int, amount: String = "") {
-        play(res,amount) {}
+    fun play(@RawRes res: Int, amount: String) {
+        play(res, amount) {}
     }
 
     @JvmStatic
     fun play(@RawRes res: Int, amount: String = "", onComplete: () -> Unit = {}) {
         val list = mutableListOf<Voice>().apply {
             add(Voice(res))
-            addAll(NumToCnAmountUtils.numberToWord(amount)
+            addAll(NumToCnAmountUtils.numberToCnAmount(amount)
                 .map { amountMap[it] }
                 .filter { it != 0 }
                 .filterNotNull()
