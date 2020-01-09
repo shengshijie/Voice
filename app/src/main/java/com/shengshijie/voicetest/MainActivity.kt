@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.shengshijie.voice.SoundPlayManager
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +15,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun test(view: View) {
-        SoundPlayManager.play(R.raw.tts_pay_success,"1.232")
+        thread {
+            SoundPlayManager.play(R.raw.tts_pay_cancel)
+            SoundPlayManager.play(R.raw.tts_pay_success, "1.324")
+        }
     }
 
     override fun onDestroy() {
