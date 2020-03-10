@@ -5,7 +5,7 @@ import com.shengshijie.voice.SoundPlayManager;
 public class Test {
 
     public static void main(String[] args) {
-        SoundPlayManager.play(R.raw.tts_0,"");
+        SoundPlayManager.play(R.raw.tts_0);
     }
 
 }

@@ -1,10 +1,8 @@
 package com.shengshijie.voice
 
 import android.content.Context
-import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.SystemClock
-import android.util.Log
 import androidx.annotation.RawRes
 import kotlin.concurrent.thread
 
@@ -42,7 +40,38 @@ object SoundPlayManager {
 
     @JvmStatic
     @JvmOverloads
-    fun play(@RawRes res: Int, amount: String = "", onComplete: () -> Unit = {}) {
+    fun play(@RawRes res: Int, delay: Int = 500, onComplete: () -> Unit = {}) {
+        thread {
+            val resId = mSoundPlayer.load(mContext, res, 1)
+            mSoundPlayer.setOnLoadCompleteListener { _, sampleId, _ ->
+                if (resId == sampleId) {
+                    mSoundPlayer.play(sampleId, 1f, 1f, 0, 0, 1f)
+                    delay(delay)
+                    onComplete()
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    @JvmOverloads
+    fun playAmount(amount: String = "", delay: Int = 300, onComplete: () -> Unit = {}) {
+        thread {
+            NumToCnAmountUtils.numberToCnAmount(amount)
+                .map { amountMap[it] }
+                .filter { it != 0 }
+                .filterNotNull()
+                .map { Voice(it, soundMap[it]) }
+                .filter { it.id != null }
+                .forEach {
+                    mSoundPlayer.play(it.id!!, 1f, 1f, 0, 0, 1f)
+                    delay(delay)
+                }
+            onComplete()
+        }
+    }
+
+    private fun playWithAmount(@RawRes res: Int, amount: String = "", onComplete: () -> Unit = {}) {
         val resId = mSoundPlayer.load(mContext, res, 1)
         mSoundPlayer.setOnLoadCompleteListener { _, sampleId, _ ->
             thread {
@@ -66,7 +95,8 @@ object SoundPlayManager {
     }
 
     private fun delay(res: Int) {
-        SystemClock.sleep(MediaPlayer.create(mContext, res).duration.toLong())
+        SystemClock.sleep(res.toLong())
+//        SystemClock.sleep(MediaPlayer.create(mContext, res).duration.toLong())
     }
 
     @JvmStatic

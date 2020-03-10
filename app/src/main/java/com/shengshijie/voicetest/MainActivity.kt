@@ -17,7 +17,11 @@ class MainActivity : AppCompatActivity() {
     fun test(view: View) {
         thread {
             SoundPlayManager.play(R.raw.tts_pay_cancel)
-            SoundPlayManager.play(R.raw.tts_pay_success, "1.324")
+            SoundPlayManager.play(R.raw.tts_pay_success) {
+                SoundPlayManager.playAmount("1.23") {
+                    SoundPlayManager.play(R.raw.tts_pay_cancel)
+                }
+            }
         }
     }
 
